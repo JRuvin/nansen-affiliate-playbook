@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nansen Affiliate Playbook</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-primary: #0B0E11;
+    --bg-secondary: #111419;
+    --bg-card: #161A1F;
+    --bg-card-hover: #1C2127;
+    --border: #1E2328;
+    --border-light: #2A2F36;
+    --text-primary: #F1F3F5;
+    --text-secondary: #8B929A;
+    --text-muted: #5C6370;
+    --accent: #3B82F6;
+    --accent-light: #60A5FA;
+    --accent-cyan: #06B6D4;
+    --accent-green: #10B981;
+    --accent-amber: #F59E0B;
+    --accent-red: #EF4444;
+    --accent-purple: #8B5CF6;
+    --gradient-1: linear-gradient(135deg, #3B82F6, #06B6D4);
+    --gradient-2: linear-gradient(135deg, #8B5CF6, #3B82F6);
+    --sidebar-width: 300px;
+    --header-height: 64px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--header-height);
+    background: rgba(11, 14, 17, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    z-index: 1000;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo {
+    font-size: 18px; font-weight: 700; color: var(--text-primary);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--gradient-1);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: white;
+  }
+  .header-badge {
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 100px; background: rgba(59,130,246,0.15);
+    color: var(--accent-light); letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .menu-toggle {
+    display: none; background: none; border: none; color: var(--text-primary);
+    cursor: pointer; padding: 8px; border-radius: 8px; font-size: 20px;
+  }
+  .menu-toggle:hover { background: var(--bg-card); }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .progress-bar-container {
+    width: 160px; height: 6px; background: var(--bg-card);
+    border-radius: 100px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 100px;
+    background: var(--gradient-1);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .progress-text { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    position: fixed; top: var(--header-height); left: 0;
+    width: var(--sidebar-width); height: calc(100vh - var(--header-height));
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    overflow-y: auto; padding: 16px 0;
+    z-index: 900;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
+
+  .nav-section { margin-bottom: 8px; }
+  .nav-section-title {
+    padding: 8px 20px; font-size: 11px; font-weight: 600;
+    color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; cursor: pointer;
+    color: var(--text-secondary); font-size: 13.5px; font-weight: 450;
+    transition: all 0.2s ease; border-left: 2px solid transparent;
+    text-decoration: none;
+  }
+  .nav-item:hover {
+    color: var(--text-primary); background: rgba(59,130,246,0.05);
+  }
+  .nav-item.active {
+    color: var(--accent-light); background: rgba(59,130,246,0.08);
+    border-left-color: var(--accent);
+  }
+  .nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+  .nav-item .nav-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav-sub-item { padding-left: 50px; font-size: 12.5px; }
+  .nav-divider { height: 1px; background: var(--border); margin: 12px 20px; }
+
+  /* ===== MAIN CONTENT ===== */
+  .main {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--header-height);
+    min-height: calc(100vh - var(--header-height));
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative; padding: 80px 60px 60px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -100px; left: -100px;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 100px;
+    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+    font-size: 12px; font-weight: 600; color: var(--accent-light);
+    margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: 48px; font-weight: 800; line-height: 1.1;
+    margin-bottom: 20px; max-width: 700px;
+    background: linear-gradient(135deg, #F1F3F5 0%, #8B929A 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 17px; color: var(--text-secondary);
+    max-width: 600px; line-height: 1.8; margin-bottom: 32px;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 12px;
+    background: var(--gradient-1); color: white;
+    font-weight: 600; font-size: 15px; border: none;
+    cursor: pointer; transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59,130,246,0.3); }
+
+  /* ===== PAGE SECTIONS ===== */
+  .page-section {
+    display: none; padding: 48px 60px 80px;
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .page-section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    margin-bottom: 40px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-eyebrow {
+    font-size: 12px; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .section-header h2 {
+    font-size: 32px; font-weight: 700; margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+  .section-header p {
+    font-size: 16px; color: var(--text-secondary); max-width: 700px; line-height: 1.7;
+  }
+
+  /* Content blocks */
+  .content-block { margin-bottom: 48px; max-width: 780px; }
+  .content-block h3 {
+    font-size: 22px; font-weight: 600; margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .content-block h4 {
+    font-size: 17px; font-weight: 600; margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+  .content-block p {
+    font-size: 15px; color: var(--text-secondary);
+    line-height: 1.8; margin-bottom: 16px;
+  }
+  .content-block strong { color: var(--text-primary); font-weight: 600; }
+  .content-block em { color: var(--accent-light); font-style: italic; }
+
+  /* Callout boxes */
+  .callout {
+    padding: 20px 24px; border-radius: 12px; margin: 24px 0;
+    border-left: 3px solid var(--accent);
+    background: rgba(59,130,246,0.05);
+  }
+  .callout.green { border-left-color: var(--accent-green); background: rgba(16,185,129,0.05); }
+  .callout.amber { border-left-color: var(--accent-amber); background: rgba(245,158,11,0.05); }
+  .callout.purple { border-left-color: var(--accent-purple); background: rgba(139,92,246,0.05); }
+  .callout p { margin-bottom: 0; font-size: 14.5px; }
+  .callout .callout-title {
+    font-weight: 600; font-size: 13px; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 8px; color: var(--accent-light);
+  }
+  .callout.green .callout-title { color: var(--accent-green); }
+  .callout.amber .callout-title { color: var(--accent-amber); }
+  .callout.purple .callout-title { color: var(--accent-purple); }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px; margin: 24px 0;
+  }
+  .card {
+    padding: 24px; border-radius: 14px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    transition: all 0.3s ease; cursor: default;
+  }
+  .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); }
+  .card-icon { font-size: 28px; margin-bottom: 12px; }
+  .card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
+  .card p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+  /* Clickable cards */
+  .card.clickable { cursor: pointer; }
+  .card.clickable:hover { border-color: rgba(59,130,246,0.3); box-shadow: 0 4px 20px rgba(59,130,246,0.1); }
+
+  /* Tables */
+  .data-table { width: 100%; border-collapse: collapse; margin: 24px 0; border-radius: 12px; overflow: hidden; }
+  .data-table th {
+    text-align: left; padding: 14px 18px; font-size: 12px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--text-muted); background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 14px 18px; font-size: 14px; color: var(--text-secondary);
+    border-bottom: 1px solid var(--border); vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(59,130,246,0.03); }
+
+  /* Steps */
+  .workflow-steps { margin: 24px 0; }
+  .step {
+    display: flex; gap: 16px; margin-bottom: 20px;
+    padding: 16px 20px; border-radius: 12px;
+    background: var(--bg-card); border: 1px solid var(--border);
+  }
+  .step-number {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(59,130,246,0.15); color: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+  }
+  .step-content h4 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .step-content p { font-size: 13.5px; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+
+  /* TLDR boxes */
+  .tldr {
+    padding: 16px 20px; border-radius: 10px; margin: 24px 0;
+    background: rgba(6,182,212,0.06); border: 1px solid rgba(6,182,212,0.15);
+  }
+  .tldr-label {
+    font-size: 11px; font-weight: 700; color: var(--accent-cyan);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .tldr p { font-size: 13.5px; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+
+  /* Decision tree */
+  .decision-tree { margin: 24px 0; }
+  .decision-node {
+    padding: 16px 20px; border-radius: 12px; margin-bottom: 12px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .decision-node:hover { border-color: rgba(59,130,246,0.3); background: var(--bg-card-hover); }
+  .decision-q { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .decision-a { font-size: 13px; color: var(--accent-light); display: flex; align-items: center; gap: 6px; }
+
+  /* Quote blocks */
+  .example-post {
+    padding: 20px 24px; border-radius: 12px; margin: 20px 0;
+    background: var(--bg-card); border: 1px solid var(--border);
+    position: relative;
+  }
+  .example-post::before {
+    content: '"'; position: absolute; top: 8px; left: 16px;
+    font-size: 48px; color: var(--accent); opacity: 0.2; font-family: Georgia;
+  }
+  .example-post p { font-size: 14.5px; color: var(--text-primary); margin: 0; padding-left: 24px; font-style: italic; }
+  .example-label {
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-left: 24px;
+  }
+
+  /* Viz placeholder */
+  .viz-placeholder {
+    padding: 14px 20px; border-radius: 10px; margin: 16px 0;
+    background: rgba(139,92,246,0.06); border: 1px dashed rgba(139,92,246,0.25);
+    font-size: 12.5px; color: var(--accent-purple); display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Inner voice */
+  .inner-voice {
+    font-style: italic; color: var(--accent-light); font-size: 14.5px;
+    margin: 16px 0; padding-left: 16px;
+    border-left: 2px solid rgba(59,130,246,0.3);
+  }
+
+  /* Tags / badges */
+  .tag {
+    display: inline-flex; padding: 3px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .tag-p0 { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+  .tag-p1 { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+  .tag-p2 { background: rgba(59,130,246,0.15); color: var(--accent-light); }
+
+  /* Page nav footer */
+  .page-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 60px; padding-top: 32px; border-top: 1px solid var(--border);
+  }
+  .page-nav-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: 10px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--text-secondary); font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s ease; text-decoration: none;
+  }
+  .page-nav-btn:hover { border-color: var(--accent); color: var(--text-primary); background: var(--bg-card-hover); }
+  .page-nav-btn .arrow { color: var(--accent); }
+
+  /* Sidebar overlay for mobile */
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 899;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-overlay.open { display: block; }
+    .main { margin-left: 0; }
+    .menu-toggle { display: flex; }
+    .hero { padding: 48px 24px 40px; }
+    .hero h1 { font-size: 32px; }
+    .page-section { padding: 32px 24px 60px; }
+    .progress-bar-container { width: 100px; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 28px; }
+    .header-right .progress-text { display: none; }
+    .data-table { font-size: 12px; }
+    .data-table th, .data-table td { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+    <div class="logo">
+      <div class="logo-icon">N</div>
+      <span>Nansen</span>
+    </div>
+    <span class="header-badge">Affiliate Playbook</span>
+  </div>
+  <div class="header-right">
+    <span class="progress-text" id="progressText">0% Complete</span>
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+    </div>
+  </div>
+</header>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="nav-section">
+    <div class="nav-section-title">Getting Started</div>
+    <a class="nav-item active" data-page="home" onclick="navigate('home')">
+      <span class="nav-icon">&#127968;</span><span class="nav-label">Welcome</span>
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 1 &mdash; The Foundation</div>
+    <a class="nav-item" data-page="core-idea" onclick="navigate('core-idea')">
+      <span class="nav-icon">&#128161;</span><span class="nav-label">The Core Idea</span>
+    </a>
+    <a class="nav-item" data-page="your-role" onclick="navigate('your-role')">
+      <span class="nav-icon">&#127919;</span><span class="nav-label">Your Role as an Affiliate</span>
+    </a>
+    <a class="nav-item" data-page="hierarchy" onclick="navigate('hierarchy')">
+      <span class="nav-icon">&#128200;</span><span class="nav-label">Smart Money Hierarchy</span>
+    </a>
+    <a class="nav-item" data-page="glossary" onclick="navigate('glossary')">
+      <span class="nav-icon">&#128214;</span><span class="nav-label">Glossary</span>
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 2 &mdash; Finding the Signal</div>
+    <a class="nav-item" data-page="decision-tree" onclick="navigate('decision-tree')">
+      <span class="nav-icon">&#129517;</span><span class="nav-label">Where to Start</span>
+    </a>
+    <a class="nav-item" data-page="wf-perps" onclick="navigate('wf-perps')">
+      <span class="nav-icon">1&#65039;&#8419;</span><span class="nav-label">Workflow: Perp Traders</span>
+    </a>
+    <a class="nav-item" data-page="wf-trending" onclick="navigate('wf-trending')">
+      <span class="nav-icon">2&#65039;&#8419;</span><span class="nav-label">Workflow: Trending + Holders</span>
+    </a>
+    <a class="nav-item" data-page="wf-exchange" onclick="navigate('wf-exchange')">
+      <span class="nav-icon">3&#65039;&#8419;</span><span class="nav-label">Workflow: Exchange Flows</span>
+    </a>
+    <a class="nav-item" data-page="wf-unlock" onclick="navigate('wf-unlock')">
+      <span class="nav-icon">4&#65039;&#8419;</span><span class="nav-label">Workflow: Token Unlocks</span>
+    </a>
+    <a class="nav-item" data-page="wf-sector" onclick="navigate('wf-sector')">
+      <span class="nav-icon">5&#65039;&#8419;</span><span class="nav-label">Workflow: Sector Rotation</span>
+    </a>
+    <a class="nav-item" data-page="wf-alerts" onclick="navigate('wf-alerts')">
+      <span class="nav-icon">6&#65039;&#8419;</span><span class="nav-label">Workflow: Smart Alerts</span>
+    </a>
+    <a class="nav-item" data-page="signal-timing" onclick="navigate('signal-timing')">
+      <span class="nav-icon">&#9200;</span><span class="nav-label">Signal Timing</span>
+    </a>
+    <a class="nav-item" data-page="when-to-post" onclick="navigate('when-to-post')">
+      <span class="nav-icon">&#128172;</span><span class="nav-label">When to Post vs Wait</span>
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 3 &mdash; Signal to Content</div>
+    <a class="nav-item" data-page="three-questions" onclick="navigate('three-questions')">
+      <span class="nav-icon">&#10067;</span><span class="nav-label">Three Questions Framework</span>
+    </a>
+    <a class="nav-item" data-page="coordination" onclick="navigate('coordination')">
+      <span class="nav-icon">&#128279;</span><span class="nav-label">Coordinated Wallets</span>
+    </a>
+    <a class="nav-item" data-page="validation" onclick="navigate('validation')">
+      <span class="nav-icon">&#128737;</span><span class="nav-label">Validating Signals</span>
+    </a>
+    <a class="nav-item" data-page="audience" onclick="navigate('audience')">
+      <span class="nav-icon">&#128101;</span><span class="nav-label">Know Your Audience</span>
+    </a>
+    <a class="nav-item" data-page="formats" onclick="navigate('formats')">
+      <span class="nav-icon">&#128196;</span><span class="nav-label">Content Formats</span>
+    </a>
+    <a class="nav-item" data-page="nfa" onclick="navigate('nfa')">
+      <span class="nav-icon">&#9888;&#65039;</span><span class="nav-label">Not Financial Advice</span>
+    </a>
+    <a class="nav-item" data-page="mistakes" onclick="navigate('mistakes')">
+      <span class="nav-icon">&#128683;</span><span class="nav-label">Common Mistakes</span>
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 4 &mdash; The Long Game</div>
+    <a class="nav-item" data-page="brand" onclick="navigate('brand')">
+      <span class="nav-icon">&#127775;</span><span class="nav-label">Building Your Brand</span>
+    </a>
+    <a class="nav-item" data-page="god-mode" onclick="navigate('god-mode')">
+      <span class="nav-icon">&#128526;</span><span class="nav-label">Token God Mode</span>
+    </a>
+    <a class="nav-item" data-page="measuring" onclick="navigate('measuring')">
+      <span class="nav-icon">&#128202;</span><span class="nav-label">Measuring Performance</span>
+    </a>
+    <a class="nav-item" data-page="daily-workflow" onclick="navigate('daily-workflow')">
+      <span class="nav-icon">&#128197;</span><span class="nav-label">Daily Workflow</span>
+    </a>
+    <a class="nav-item" data-page="quiet-markets" onclick="navigate('quiet-markets')">
+      <span class="nav-icon">&#127754;</span><span class="nav-label">Quiet Market Strategy</span>
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 5 &mdash; Case Studies</div>
+    <a class="nav-item" data-page="cs-mm" onclick="navigate('cs-mm')">
+      <span class="nav-icon">&#128176;</span><span class="nav-label">Market Maker Accumulation</span>
+    </a>
+    <a class="nav-item" data-page="cs-unlock" onclick="navigate('cs-unlock')">
+      <span class="nav-icon">&#128275;</span><span class="nav-label">Token Unlock</span>
+    </a>
+    <a class="nav-item" data-page="cs-concentration" onclick="navigate('cs-concentration')">
+      <span class="nav-icon">&#128680;</span><span class="nav-label">Supply Concentration</span>
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Part 6 &mdash; Advanced Playbook</div>
+    <a class="nav-item" data-page="event-pairing" onclick="navigate('event-pairing')">
+      <span class="nav-icon">&#128279;</span><span class="nav-label">On-Chain + Off-Chain Events</span>
+    </a>
+    <a class="nav-item" data-page="differentiation" onclick="navigate('differentiation')">
+      <span class="nav-icon">&#128142;</span><span class="nav-label">Differentiation Strategy</span>
+    </a>
+    <a class="nav-item" data-page="win-rates" onclick="navigate('win-rates')">
+      <span class="nav-icon">&#127942;</span><span class="nav-label">Smart Money Win Rates</span>
+    </a>
+    <a class="nav-item" data-page="multi-platform" onclick="navigate('multi-platform')">
+      <span class="nav-icon">&#128250;</span><span class="nav-label">Multi-Platform Content</span>
+    </a>
+    <a class="nav-item" data-page="scaling" onclick="navigate('scaling')">
+      <span class="nav-icon">&#128640;</span><span class="nav-label">Scaling Your Output</span>
+    </a>
+    <a class="nav-item" data-page="monetization" onclick="navigate('monetization')">
+      <span class="nav-icon">&#128176;</span><span class="nav-label">Communities & Monetization</span>
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <a class="nav-item" data-page="first-week" onclick="navigate('first-week')">
+      <span class="nav-icon">&#9989;</span><span class="nav-label">Your First Week Checklist</span>
+    </a>
+  </div>
+
+  <div style="height: 40px;"></div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="mainContent">
+
+<!-- HOME / HERO -->
+<div class="page-section active" id="page-home">
+  <div class="hero">
+    <div class="hero-eyebrow">&#128218; Internal Education</div>
+    <h1>The Nansen Affiliate Playbook</h1>
+    <p>From data to story. Everything you need to find on-chain signals, turn them into compelling content, and build an audience that trusts your analysis.</p>
+    <p style="font-size:14px; color: var(--text-muted); margin-bottom: 40px;">Take it at your own pace. Come back to sections when they become relevant. If something doesn't click the first time, that's normal, it clicks when you see it in the data.</p>
+
+    <div class="cards-grid" style="max-width: 900px;">
+      <div class="card clickable" onclick="navigate('core-idea')">
+        <div class="card-icon">&#128161;</div>
+        <h4>Part 1: The Foundation</h4>
+        <p>Supply vs demand, who the players are, the terms you'll see everywhere. Start here.</p>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent-light);font-weight:500;">Day 1 &rarr;</div>
+      </div>
+      <div class="card clickable" onclick="navigate('decision-tree')">
+        <div class="card-icon">&#128270;</div>
+        <h4>Part 2: Finding the Signal</h4>
+        <p>Six practical workflows, a decision tree, signal timing, and validation.</p>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent-light);font-weight:500;">Days 2-5 &rarr;</div>
+      </div>
+      <div class="card clickable" onclick="navigate('three-questions')">
+        <div class="card-icon">&#9997;&#65039;</div>
+        <h4>Part 3: Signal to Content</h4>
+        <p>How to turn data into stories, audience growth, responsible framing, common mistakes.</p>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent-light);font-weight:500;">Days 2-5 &rarr;</div>
+      </div>
+      <div class="card clickable" onclick="navigate('brand')">
+        <div class="card-icon">&#127775;</div>
+        <h4>Part 4: The Long Game</h4>
+        <p>Building a brand, measuring what works, daily workflow, quiet market strategy.</p>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent-light);font-weight:500;">Week 2 &rarr;</div>
+      </div>
+      <div class="card clickable" onclick="navigate('cs-mm')">
+        <div class="card-icon">&#128218;</div>
+        <h4>Part 5: Case Studies</h4>
+        <p>Three worked examples showing the full arc from signal to content series.</p>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent-light);font-weight:500;">Week 2 &rarr;</div>
+      </div>
+      <div class="card clickable" onclick="navigate('event-pairing')">
+        <div class="card-icon">&#128640;</div>
+        <h4>Part 6: Advanced Playbook</h4>
+        <p>Event pairing, differentiation, win-rate scoring, multi-platform, scaling, monetization.</p>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent-light);font-weight:500;">Week 3+ &rarr;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 1: CORE IDEA -->
+<div class="page-section" id="page-core-idea">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 1 &mdash; The Foundation</div>
+    <h2>The One Idea That Makes Everything Click</h2>
+    <p>Trading, at its core, is supply and demand. Nansen tells you who owns the supply, and who is the demand. That's it. Everything else is detail.</p>
+  </div>
+  <div class="content-block">
+    <p>Sit with that for a moment, because it's the lens that makes everything in this playbook make sense. Every workflow, every post format, every content angle you'll learn here comes back to one question:</p>
+    <p class="inner-voice">What's happening between the people who hold the tokens and the people who want them?</p>
+  </div>
+  <div class="tldr">
+    <div class="tldr-label">TLDR</div>
+    <p>Nansen shows you who holds the tokens (supply) and who's actively buying them (demand). That's your content edge in one sentence.</p>
+  </div>
+  <div class="content-block">
+    <h3>Why Blockchain Changes the Game</h3>
+    <p>Most financial markets are hidden. You can see stock prices, but you can't see what Goldman Sachs bought this morning, or when a hedge fund started quietly building a position before everyone caught on.</p>
+    <p>Crypto is different. Every transaction is public, permanent, and traceable on the blockchain. Every wallet, every movement, every buy and sell is recorded and visible, to anyone who knows how to read it.</p>
+    <p>The problem is the noise. There are millions of wallets and billions of transactions. Without the right tools, finding what matters is like searching a library with no index.</p>
+    <p><strong>Nansen is that index.</strong> It labels wallets, tracks fund flows, and surfaces what matters: who is moving money, where it's going, and what it typically means when they do.</p>
+    <p class="inner-voice">Think about it this way: imagine you could see every trade Goldman Sachs made, in real time, before it showed up in any filing. That's what on-chain data gives you for crypto, and Nansen makes it readable.</p>
+  </div>
+  <div class="page-nav">
+    <div></div>
+    <a class="page-nav-btn" onclick="navigate('your-role')"><span>Your Role as an Affiliate</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- PART 1: YOUR ROLE -->
+<div class="page-section" id="page-your-role">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 1 &mdash; The Foundation</div>
+    <h2>Your Role as an Affiliate</h2>
+    <p>Be clear on what your job actually is, because it's simpler than most people expect.</p>
+  </div>
+  <div class="content-block">
+    <p>Most people have no idea where the money is in crypto, or where it's going. On-chain analysis that surfaces this typically takes years of experience to develop. Think of investigators like ZachXBT, well-known for tracing crypto wallets, following money flows, and uncovering what's really happening behind the scenes.</p>
+    <p><strong>Nansen does the analytical heavy lifting for you.</strong> It identifies the wallets, labels the entities, and surfaces the movements.</p>
+    <p>Your job is to become the <strong>distribution channel</strong>. You don't need to be a trader or an analyst. You need to be the person who finds what Nansen surfaces and shares it with an audience that doesn't have the tools or time to look for themselves.</p>
+    <p>That's a genuinely valuable role, and it's one most people aren't filling yet.</p>
+    <p class="inner-voice">Ask yourself: how many people in my timeline right now are posting on-chain data with real wallet labels and real numbers behind it? Probably very few. That's the gap you're filling.</p>
+  </div>
+  <div class="tldr">
+    <div class="tldr-label">TLDR</div>
+    <p>You don't need to trade. You need to find the signal in Nansen and share it with people who don't have the tools or time to look themselves. Nansen does the analysis. You do the distribution.</p>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('core-idea')"><span class="arrow">&larr;</span> <span>The Core Idea</span></a>
+    <a class="page-nav-btn" onclick="navigate('hierarchy')"><span>Smart Money Hierarchy</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- PART 1: HIERARCHY -->
+<div class="page-section" id="page-hierarchy">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 1 &mdash; The Foundation</div>
+    <h2>The Smart Money Hierarchy</h2>
+    <p>Not all market participants are equal. Understanding who each player is shapes how you interpret what Nansen shows you.</p>
+  </div>
+  <div class="content-block">
+    <p>Think of crypto token markets as having two sides: those who <strong>supply</strong> the tokens, and those who <strong>buy</strong> them.</p>
+    <p class="inner-voice">When you see a wallet moving tokens in Nansen, the first question you should ask yourself is: which side of this hierarchy does this wallet sit on? That answer changes the entire story.</p>
+
+    <h3>The Supply Side</h3>
+    <p>These are the people who created the project and received tokens before anyone else could buy them.</p>
+    <table class="data-table">
+      <thead><tr><th>Player</th><th>What They Do</th><th>Content Angle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Foundations</strong></td><td>The org behind the project. They hold a large portion at launch and control release.</td><td>Foundation wallet moving large amounts unexpectedly = newsworthy.</td></tr>
+        <tr><td><strong>VCs</strong></td><td>Early investors. Tokens on a vesting schedule, released gradually.</td><td>VC vesting ends + selling = downward pressure. Nansen shows this in real time.</td></tr>
+        <tr><td><strong>Founders</strong></td><td>Built the project. Token grants on a vesting schedule.</td><td>Selling behaviour after vesting events = strong content signal.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The Demand Side</h3>
+    <p>These are the people buying tokens on the open market.</p>
+    <table class="data-table">
+      <thead><tr><th>Player</th><th>What They Do</th><th>Content Angle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hedge Funds</strong></td><td>Professional investment vehicles. Large, organised buyers.</td><td>Large fund purchases signal institutional interest.</td></tr>
+        <tr><td><strong>Market Makers</strong></td><td>Entities like Wintermute or Jump. Provide liquidity + sometimes take directional positions.</td><td>When an MM accumulates rather than just making markets = strong signal.</td></tr>
+        <tr><td><strong>Smart Money / Whales</strong></td><td>Experienced traders with a track record of being early.</td><td>The core of most top-tier content. Named wallets make any story compelling.</td></tr>
+        <tr><td><strong>KOLs</strong></td><td>Public figures. Their moves carry social weight.</td><td>Spotting a KOL's wallet in a holder list = instant content.</td></tr>
+        <tr><td><strong>Retail</strong></td><td>Everyday investors. Typically buy after the move.</td><td>Retail entering = the move may be late. Smart money may be selling.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout green">
+    <div class="callout-title">The Typical Flow</div>
+    <p>Foundations release tokens to VCs and founders (supply side) &rarr; Hedge funds and smart money buy early (demand side, early) &rarr; Price rises &rarr; Retail enters on the news (demand side, late) &rarr; Smart money starts selling.</p>
+  </div>
+
+  <div class="tldr">
+    <div class="tldr-label">TLDR</div>
+    <p>Supply side creates and distributes tokens. Demand side buys them. Smart money moves before retail. Retail moves on news. Nansen shows you where each player is positioned right now, and your job is to tell that story.</p>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('your-role')"><span class="arrow">&larr;</span> <span>Your Role</span></a>
+    <a class="page-nav-btn" onclick="navigate('glossary')"><span>Glossary</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- GLOSSARY -->
+<div class="page-section" id="page-glossary">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 1 &mdash; The Foundation</div>
+    <h2>Glossary</h2>
+    <p>Don't memorize all of these right now. Read through them once, then come back whenever a term comes up. This is a reference section, not a quiz.</p>
+  </div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Accumulation</h4><p>When a wallet buys a token gradually, building a position. Often signals belief the price will rise. Opposite of distribution.</p></div>
+      <div class="card"><h4>Distribution</h4><p>When a wallet starts selling a previously accumulated token. Also called "taking profit." Often more valuable to catch than accumulation.</p></div>
+      <div class="card"><h4>Cost Basis</h4><p>The price at which a wallet originally bought. Tells you whether they're sitting on profit or loss, and how motivated they might be to sell.</p></div>
+      <div class="card"><h4>Exchange Inflows / Outflows</h4><p>Tokens moving to an exchange = preparing to sell. Tokens leaving an exchange = long-term holding. Outflows = less sell pressure.</p></div>
+      <div class="card"><h4>Token Unlock</h4><p>When a batch of vested tokens becomes available to move or sell. Known in advance. Creates natural 3-part content arcs.</p></div>
+      <div class="card"><h4>Supply Concentration</h4><p>When few wallets hold a large % of supply. Both a risk signal and a content angle. 5 wallets holding 40% = outsized price power.</p></div>
+      <div class="card"><h4>Whale</h4><p>A wallet moving $1M+ in a single transaction. No fixed definition, but large movers get this label.</p></div>
+      <div class="card"><h4>Smart Money</h4><p>Wallets with a track record of good trades. Often funds, market makers, or experienced traders. Nansen labels many of them.</p></div>
+      <div class="card"><h4>Perpetuals / Perps</h4><p>Betting on price direction without owning the token. Nansen tracks top perp traders by profit. Useful content angle.</p></div>
+      <div class="card"><h4>uPNL</h4><p>Unrealised Profit and Loss. How much a trader is up or down on an open position. $7M uPNL = $7M in paper profits.</p></div>
+      <div class="card"><h4>Funding Rate</h4><p>Periodic payment between longs and shorts. Very high = crowded trade = reversal risk. Worth mentioning in perp trader posts.</p></div>
+      <div class="card"><h4>Alpha / Edge / Signal</h4><p>The ability to act ahead of the crowd. For you: knowing something your audience doesn't, and being the one who surfaces it.</p></div>
+    </div>
+
+    <h3 style="margin-top:40px;">Cost Basis Motivation Matrix</h3>
+    <p>This turns a single number into a narrative. Every time you check the Holders tab, ask: how motivated is this wallet to sell right now?</p>
+    <table class="data-table">
+      <thead><tr><th>Profit Level</th><th>What It Usually Means</th><th>How to Frame It</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Up 0-2x</strong></td><td>Still building conviction, or recently entered. Low motivation to sell.</td><td>"Entered recently, holding through early gains."</td></tr>
+        <tr><td><strong>Up 2-5x</strong></td><td>Comfortable profit. Could start taking some off the table.</td><td>"Sitting on solid gains. Worth watching for early distribution."</td></tr>
+        <tr><td><strong>Up 5-10x</strong></td><td>Significant profit. Strong incentive to distribute.</td><td>"Up 8x on their position. Any sell activity is notable."</td></tr>
+        <tr><td><strong>Up 10x+</strong></td><td>Very high likelihood of eventual distribution.</td><td>"Bought at $0.001, up 15x. When they sell, the market will feel it."</td></tr>
+        <tr><td><strong>In loss</strong></td><td>Committed long-term, or stuck. Check if they're buying more or inactive.</td><td>"Still underwater. Adding more = conviction. Silent = bag-holding."</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('hierarchy')"><span class="arrow">&larr;</span> <span>Hierarchy</span></a>
+    <a class="page-nav-btn" onclick="navigate('decision-tree')"><span>Where to Start</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- DECISION TREE -->
+<div class="page-section" id="page-decision-tree">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 2 &mdash; Finding the Signal</div>
+    <h2>Where to Start: A Decision Tree</h2>
+    <p>Just logged into Nansen and not sure what to look at first? Use this. It takes the guesswork out of your first 5 minutes.</p>
+  </div>
+  <div class="content-block">
+    <div class="decision-tree">
+      <div class="decision-node" onclick="navigate('wf-trending')">
+        <div class="decision-q">Is there a token trending in your timeline right now?</div>
+        <div class="decision-a">&rarr; Workflow 2 (Trending + Holders). You already have the token. Check who's holding it.</div>
+      </div>
+      <div class="decision-node" onclick="navigate('wf-perps')">
+        <div class="decision-q">No trending token, but you want something quick to post?</div>
+        <div class="decision-a">&rarr; Workflow 1 (Perps). Sort by uPNL, find the biggest number, post it. Under 10 minutes.</div>
+      </div>
+      <div class="decision-node">
+        <div class="decision-q">You want to find something no one is talking about yet?</div>
+        <div class="decision-a">&rarr; Token Screener. Toggle Whale + Smart Money filters. Sort by net inflows. Look for tokens with large smart money inflows and no price reaction.</div>
+      </div>
+      <div class="decision-node" onclick="navigate('wf-alerts')">
+        <div class="decision-q">You have a specific wallet you've been watching?</div>
+        <div class="decision-a">&rarr; Check Wallet Profiler for recent activity. No new move? Check your smart alerts.</div>
+      </div>
+      <div class="decision-node" onclick="navigate('quiet-markets')">
+        <div class="decision-q">Nothing is jumping out and the market feels flat?</div>
+        <div class="decision-a">&rarr; Quiet Market Strategy. Retroactive analysis, wallet spotlights, and explainer content.</div>
+      </div>
+    </div>
+    <p style="color: var(--text-muted); font-size: 14px;">The point isn't to follow this decision tree forever. After a few weeks, you'll develop your own instincts. But when you draw a blank, this gives you a default path.</p>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('glossary')"><span class="arrow">&larr;</span> <span>Glossary</span></a>
+    <a class="page-nav-btn" onclick="navigate('wf-perps')"><span>Workflow 1: Perps</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- WORKFLOW 1: PERPS -->
+<div class="page-section" id="page-wf-perps">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 2 &mdash; Workflow 1</div>
+    <h2>Find Top Perpetual Traders</h2>
+    <p>Find the wallets sitting on the biggest unrealised profits, then turn that number into a post. The number does the talking.</p>
+  </div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number">1</div><div class="step-content"><h4>Log into app.nansen.ai</h4></div></div>
+      <div class="step"><div class="step-number">2</div><div class="step-content"><h4>Click Perps on the Home page</h4></div></div>
+      <div class="step"><div class="step-number">3</div><div class="step-content"><h4>Select BTC</h4><p>BTC tends to have the most activity. You can try other assets too.</p></div></div>
+      <div class="step"><div class="step-number">4</div><div class="step-content"><h4>Find the uPNL column and sort highest to lowest</h4><p>This shows each wallet's current unrealised profit or loss.</p></div></div>
+      <div class="step"><div class="step-number">5</div><div class="step-content"><h4>Click the top wallet and copy the address</h4></div></div>
+    </div>
+    <div class="callout">
+      <div class="callout-title">Why your audience cares</div>
+      <p>A wallet sitting on $7M in profit is concrete, shareable proof that there are people in crypto making serious money, and that Nansen shows you exactly who they are.</p>
+    </div>
+    <h4>Going deeper</h4>
+    <p>Don't stop at the number. Ask yourself: <em>is this wallet consistently profitable, or is this a one-off?</em> Click through to their profile and check trade history. A wallet that's been top 10 for 3 consecutive weeks is a much stronger story than a one-hit wonder.</p>
+    <p>Also check the <strong>funding rate</strong>. If the wallet is sitting on massive profits while funding is extremely high, that adds tension, the crowd agrees with this trader, but crowded trades often reverse.</p>
+    <div class="example-post">
+      <div class="example-label">Example Post</div>
+      <p>"This Hyperliquid trader is currently up $7.92M on their BTC position."</p>
+    </div>
+    <div class="viz-placeholder">&#128248; Screenshot: Perps table sorted by uPNL, top wallet highlighted</div>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('decision-tree')"><span class="arrow">&larr;</span> <span>Decision Tree</span></a>
+    <a class="page-nav-btn" onclick="navigate('wf-trending')"><span>Workflow 2: Trending</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- WORKFLOW 2: TRENDING -->
+<div class="page-section" id="page-wf-trending">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 2 &mdash; Workflow 2</div>
+    <h2>Trending Coins + Notable Holders</h2>
+    <p>Find a trending token, then check Nansen to see if any recognizable wallets are holding it. Add the on-chain layer to a story people are already watching.</p>
+  </div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number">1</div><div class="step-content"><h4>Click Trending on the Home page</h4></div></div>
+      <div class="step"><div class="step-number">2</div><div class="step-content"><h4>Pick a token gaining traction in your timeline</h4></div></div>
+      <div class="step"><div class="step-number">3</div><div class="step-content"><h4>Go to the Holders tab</h4><p>Shows all wallets currently holding this token.</p></div></div>
+      <div class="step"><div class="step-number">4</div><div class="step-content"><h4>Find a labeled wallet</h4><p>Scroll for a fund name, known trader, or entity like Wintermute. Note their balance, cost basis, and whether they're up or down.</p></div></div>
+    </div>
+    <p class="inner-voice">Does the cost basis tell a story? A fund at $0.02 with the token at $0.10 is up 5x and has incentive to sell. Cost basis at $0.08? They're barely up, might still be building.</p>
+
+    <h4 style="margin-top:32px;">What to Do When You Can't Find a Labeled Wallet</h4>
+    <p>This will happen more often than not. Most wallets are unlabeled. An unlabeled wallet can still be a strong post:</p>
+    <div class="cards-grid">
+      <div class="card"><h4>Check Their History</h4><p>Use Wallet Profiler. Have they been early on previous tokens? Their track record is the label.</p></div>
+      <div class="card"><h4>Check for Coordination</h4><p>Are other wallets buying the same token at the same time? Coordination is the story.</p></div>
+      <div class="card"><h4>Check Behavior</h4><p>Do they move tokens off exchanges after buying? That's holding conviction.</p></div>
+      <div class="card"><h4>Check Size</h4><p>An unlabeled wallet holding $5M is worth posting about. The size alone is the story.</p></div>
+    </div>
+    <div class="example-post">
+      <div class="example-label">Example Post</div>
+      <p>"$TOKEN is up 22% today, and [known wallet / entity] is holding $Xm of it."</p>
+    </div>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('wf-perps')"><span class="arrow">&larr;</span> <span>Workflow 1: Perps</span></a>
+    <a class="page-nav-btn" onclick="navigate('wf-exchange')"><span>Workflow 3: Exchange Flows</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- WORKFLOW 3: EXCHANGE FLOWS -->
+<div class="page-section" id="page-wf-exchange">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 2 &mdash; Workflow 3</div>
+    <h2>Exchange Flows: Reading the Supply Squeeze</h2>
+    <p>Track when large amounts of a token move onto or off of exchanges. One of the most readable signals in Nansen because the direction tells the story.</p>
+  </div>
+  <div class="content-block">
+    <div class="cards-grid" style="margin-bottom: 32px;">
+      <div class="card" style="border-left: 3px solid var(--accent-green);">
+        <h4 style="color:var(--accent-green);">Tokens Leave Exchange</h4>
+        <p>Holder taking custody. "I'm not selling anytime soon." Less supply available = price tends to rise.</p>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--accent-red);">
+        <h4 style="color:var(--accent-red);">Tokens Enter Exchange</h4>
+        <p>Holder positioning to sell. They put tokens there because they want the sell button.</p>
+      </div>
+    </div>
+    <p class="inner-voice">Think of it like this: if you saw people walking into a pawn shop carrying gold, you'd expect prices to drop. People buying gold and walking out? Prices hold or rise.</p>
+
+    <h4>What to look for</h4>
+    <p><strong>Sustained outflows over 48-72 hours</strong> are more meaningful than a single large withdrawal. <strong>Sudden large inflows after a price pump</strong> could signal early holders moving to sell into the rally. <strong>Outflows + smart money accumulation</strong> at the same time is a strong combination.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">When the Signal Flips</div>
+      <p><strong>During strong rallies:</strong> Inflows might be retail taking profits, not whales dumping. Check who's moving (retail-size wallets vs whale-size). <strong>After a crash:</strong> Outflows might be bag-holders giving up on selling, not conviction buying. Check cost basis. <strong>Market maker rebalancing:</strong> Normal operational transfers that look alarming but mean nothing.</p>
+    </div>
+    <div class="example-post">
+      <div class="example-label">Example Post</div>
+      <p>"Over the past 3 days, $40M of [token] has quietly left exchanges. That's supply leaving the market. No news. No hype. Just wallets moving tokens into cold storage."</p>
+    </div>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('wf-trending')"><span class="arrow">&larr;</span> <span>Workflow 2</span></a>
+    <a class="page-nav-btn" onclick="navigate('wf-unlock')"><span>Workflow 4: Unlocks</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- WORKFLOW 4: TOKEN UNLOCKS -->
+<div class="page-section" id="page-wf-unlock">
+  <div class="section-header">
+    <div class="section-eyebrow">Part 2 &mdash; Workflow 4</div>
+    <h2>Token Unlock Calendar: Content That Writes Itself</h2>
+    <p>Unlike most on-chain signals, unlock dates are known in advance. You can prepare content before it happens, watch it live, and follow up after.</p>
+  </div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number">1</div><div class="step-content"><h4>Find upcoming unlocks</h4><p>TokenUnlocks.app for dates. Note which projects have large unlocks in the next 7-14 days.</p></div></div>
+      <div class="step"><div class="step-number">2</div><div class="step-content"><h4>Cross-reference in Nansen</h4><p>Open the token page, Holders tab. Filter for VC, fund, or foundation wallets.</p></div></div>
+      <div class="step"><div class="step-number">3</div><div class="step-content"><h4>Check Balance Over Time</h4><p>Have they been holding steady or moving tokens before the official date?</p></div></div>
+      <div class="step"><div class="step-number">4</div><div class="step-content"><h4>Follow up 24-48 hours after</h4><p>Did they sell immediately, transfer to exchange, or hold?</p></div></div>
+    </div>
+    <h4>Three content angles from one event</h4>
+    <div class="cards-grid">
+      <div class="card"><h4>Before the Unlock</h4><p>"Project X has $80M unlocking in 5 days. Last time, VCs sold 60% in the first week. Here's what the wallets look like right now."</p></div>
+      <div class="card"><h4>During the Unlock</h4><p>"The unlock just happened. Watching 3 VC wallets. One moved to Binance. Two haven't moved yet."</p></div>
+      <div class="card"><h4>After the Unlock</h4><p>"48 hours later: Wallet A sold everything. B and C moved to cold storage. 2 of 3 VCs chose to stay."</p></div>
+    </div>
+    <div class="callout green">
+      <div class="callout-title">The Unlock + Hold Angle</div>
+      <p>When founders or VCs <em>could</em> sell but choose not to, that tells a story too. It signals conviction. "This VC could have sold $20M today. They didn't." That's content most people never post because they only watch for selling.</p>
+    </div>
+  </div>
+  <div class="page-nav">
+    <a class="page-nav-btn" onclick="navigate('wf-exchange')"><span class="arrow">&larr;</span> <span>Workflow 3</span></a>
+    <a class="page-nav-btn" onclick="navigate('wf-sector')"><span>Workflow 5: Sector Rotation</span> <span class="arrow">&rarr;</span></a>
+  </div>
+</div>
+
+<!-- Placeholder pages for remaining sections -->
+<div class="page-section" id="page-wf-sector">
+  <div class="section-header"><div class="section-eyebrow">Part 2 &mdash; Workflow 5</div><h2>Sector Rotation: Where Is Smart Money Moving Next?</h2><p>Step back from individual tokens. Look at which categories are seeing smart money flow in before the narrative goes mainstream.</p></div>
+  <div class="content-block">
+    <p>Crypto markets move in attention cycles. One month it's AI tokens, next it's infrastructure or gaming. The affiliates already positioned in a narrative before it trends get the most engagement.</p>
+    <p class="inner-voice">Here's the question this workflow answers: "Where is the money going that most people haven't noticed yet?"</p>
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number">1</div><div class="step-content"><h4>Navigate to Token Screener</h4></div></div>
+      <div class="step"><div class="step-number">2</div><div class="step-content"><h4>Filter by Smart Money, Funds, or Whale activity</h4></div></div>
+      <div class="step"><div class="step-number">3</div><div class="step-content"><h4>Look for clusters</h4><p>Multiple tokens in the same category (AI, DeFi, gaming) all showing smart money accumulation.</p></div></div>
+      <div class="step"><div class="step-number">4</div><div class="step-content"><h4>Cross-reference with price action</h4><p>Smart money accumulating across a category + prices still flat = early narrative signal.</p></div></div>
+    </div>
+    <div class="example-post"><div class="example-label">Example Post</div><p>"Smart money has been quietly accumulating across AI tokens this week. $RENDER, $FET, and $AGIX all seeing fund inflows with no price reaction yet."</p></div>
+    <div class="tldr"><div class="tldr-label">TLDR</div><p>When smart money accumulates across multiple tokens in the same sector while prices are flat, that's an early narrative signal. Sector-level insights position you above the crowd.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('wf-unlock')"><span class="arrow">&larr;</span> <span>Workflow 4</span></a><a class="page-nav-btn" onclick="navigate('wf-alerts')"><span>Workflow 6: Alerts</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-wf-alerts">
+  <div class="section-header"><div class="section-eyebrow">Part 2 &mdash; Workflow 6</div><h2>Setting Up Smart Alerts</h2><p>Configure Nansen to notify you automatically. The single most important feature for posting consistently without burning hours on research.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Wallet Alerts</h4><p>"Notify me when this wallet transacts above $X." For wallets on your watchlist. When they move $2M into a new token, you know immediately.</p></div>
+      <div class="card"><h4>Token Alerts</h4><p>"Notify me when this token sees unusual activity from Smart Money, Funds, or Whales." For tokens you're monitoring.</p></div>
+    </div>
+    <div class="callout amber"><div class="callout-title">Managing Alert Volume</div><p>Start with 3-5 alerts max. Set thresholds higher than you think. Goal: 1-3 meaningful notifications per day, not a constant stream. After a week, ask: "Did any alert lead to a post?" If not, adjust.</p></div>
+    <p>When an alert leads to a good post, <strong>mention it</strong>. "I got this alert at 9pm, one of the wallets I track just moved $3M into [token]. By morning, price was up 18%." This shows your audience you have a system.</p>
+    <div class="example-post"><div class="example-label">Example Post</div><p>"One of the wallets I've been tracking just moved $2.5M into $TOKEN. This wallet was early on $PEPE and $ARB. When this wallet moves, I pay attention."</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('wf-sector')"><span class="arrow">&larr;</span> <span>Workflow 5</span></a><a class="page-nav-btn" onclick="navigate('signal-timing')"><span>Signal Timing</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-signal-timing">
+  <div class="section-header"><div class="section-eyebrow">Part 2 &mdash; Reading Signals</div><h2>Reading the Right Signals at the Right Time</h2><p>Not all data is equally valuable at all times. Understanding when a signal matters most is part of developing your edge.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card" style="border-top: 3px solid var(--accent-green);"><h4>Accumulation (Before)</h4><p>The most valuable and hardest to catch. Multiple wallets buying with no news or price action. <strong>The story:</strong> Something is happening before the crowd notices.</p></div>
+      <div class="card" style="border-top: 3px solid var(--accent);"><h4>Confirmation (During)</h4><p>Price is moving. You demonstrate Nansen caught it before. Named labels, accumulation that started pre-spike. <strong>The story:</strong> Here's who caused this.</p></div>
+      <div class="card" style="border-top: 3px solid var(--accent-amber);"><h4>Distribution (After)</h4><p>Often overlooked, and the most actionable. When accumulators start selling. <strong>The story:</strong> Smart money is getting out.</p></div>
+    </div>
+    <p class="inner-voice">Which of these three types of signal would you feel most comfortable posting about right now? Start there.</p>
+    <div class="tldr"><div class="tldr-label">TLDR</div><p>Accumulation before the move = rarest and most valuable. Confirmation during = common but useful. Distribution after = underused and most actionable. Cover all three.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('wf-alerts')"><span class="arrow">&larr;</span> <span>Smart Alerts</span></a><a class="page-nav-btn" onclick="navigate('when-to-post')"><span>When to Post vs Wait</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-when-to-post">
+  <div class="section-header"><div class="section-eyebrow">Part 2 &mdash; Timing</div><h2>When to Post vs. When to Wait</h2><p>Your finger is hovering over the post button. Here's the framework that takes the guesswork out of it.</p></div>
+  <div class="content-block">
+    <table class="data-table">
+      <thead><tr><th>Signal Type</th><th>When to Post</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Accumulation</strong></td><td>Within 24 hours</td><td>Time-sensitive. Waiting 3 days = old news. Frame as observation, follow up later.</td></tr>
+        <tr><td><strong>Distribution</strong></td><td>Wait 6-12 hours</td><td>Happens in stages. Half a day gives clearer picture of real exit vs rebalance.</td></tr>
+        <tr><td><strong>Coordination</strong></td><td>Wait 24-48 hours</td><td>Let more wallets join the pattern. 5 wallets > 2 wallets.</td></tr>
+        <tr><td><strong>Exchange Flows</strong></td><td>Need 48-72 hours</td><td>One transfer is noise. 3 days of consistent pattern is signal.</td></tr>
+        <tr><td><strong>Breaking News</strong></td><td>Immediately</td><td>Speed matters. "Within 30 min of the announcement, 3 whales started moving."</td></tr>
+      </tbody>
+    </table>
+    <div class="callout green"><div class="callout-title">When a signal doesn't play out</div><p>Never delete the post. Always follow up. "I flagged accumulation a week ago. Price hasn't moved. Wallets still holding. Either longer-term play or thesis is wrong. I'll update." That follow-up does more for credibility than the original post.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('signal-timing')"><span class="arrow">&larr;</span> <span>Signal Timing</span></a><a class="page-nav-btn" onclick="navigate('three-questions')"><span>Three Questions</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<!-- PART 3 PAGES -->
+<div class="page-section" id="page-three-questions">
+  <div class="section-header"><div class="section-eyebrow">Part 3 &mdash; Signal to Content</div><h2>Three Questions That Turn Data Into a Story</h2><p>On-chain data on its own means nothing to most people. Your job is to translate it into stakes.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card" style="border-top: 3px solid var(--accent);"><div class="card-icon">1</div><h4>What happened?</h4><p>State the fact plainly. "$4.5M of PEPE was bought by 3 wallets in 6 hours." No interpretation yet.</p></div>
+      <div class="card" style="border-top: 3px solid var(--accent-cyan);"><div class="card-icon">2</div><h4>Who did it?</h4><p>"Two of those wallets are linked to Jump Trading." A named entity transforms the story. No label? Describe the pattern.</p></div>
+      <div class="card" style="border-top: 3px solid var(--accent-green);"><div class="card-icon">3</div><h4>What does it mean for the reader?</h4><p>"If you'd had a smart alert on these wallets, you'd have seen the signal 4 hours before." Make it personal.</p></div>
+    </div>
+    <p>Every piece of content should answer all three. If you can only answer one or two, find the missing data or hold the post.</p>
+    <p class="inner-voice">Try this: write the answers to all three questions as single sentences before you write the actual post. If any sentence feels weak, that's the part of the story to strengthen.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('when-to-post')"><span class="arrow">&larr;</span> <span>When to Post</span></a><a class="page-nav-btn" onclick="navigate('coordination')"><span>Coordinated Wallets</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-coordination">
+  <div class="section-header"><div class="section-eyebrow">Part 3 &mdash; Signal to Content</div><h2>Spotting Coordinated Wallet Activity</h2><p>A single wallet buying is a data point. Multiple wallets buying the same token at the same time is a pattern. Patterns imply intent.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Identical Timing</h4><p>3-5 wallets entering the same token within 30-60 minutes. That's not coincidence.</p></div>
+      <div class="card"><h4>Matching Sizes</h4><p>4 wallets each buy exactly $250K within hours. The uniformity is the story.</p></div>
+      <div class="card"><h4>Common Funding</h4><p>Coordinated wallets funded from the same source wallet. One entity, multiple addresses.</p></div>
+      <div class="card"><h4>Repeated Pattern</h4><p>Same cluster appeared in a previous token move. Not just coordination, a track record.</p></div>
+    </div>
+    <div class="example-post"><div class="example-label">Example Post</div><p>"5 wallets moved into $TOKEN within a 40-minute window. Each bought $200K-$300K. Two funded from the same source. These aren't random buyers."</p></div>
+    <p class="inner-voice">Ask yourself whenever you find an interesting wallet: "Does this wallet travel alone, or does it move with others?"</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('three-questions')"><span class="arrow">&larr;</span> <span>Three Questions</span></a><a class="page-nav-btn" onclick="navigate('validation')"><span>Validating Signals</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-validation">
+  <div class="section-header"><div class="section-eyebrow">Part 3 &mdash; Signal to Content</div><h2>Validating Signals: Avoid Posting a Fake Move</h2><p>Before you post, run the signal through this checklist. Takes 5 minutes. Saves your credibility.</p></div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number">&#10003;</div><div class="step-content"><h4>Check 1: Does the wallet have history?</h4><p>Brand-new wallet + large coordinated buy = red flag. 6 months of diverse activity = more likely real.</p></div></div>
+      <div class="step"><div class="step-number">&#10003;</div><div class="step-content"><h4>Check 2: Is the token legitimate?</h4><p>Multiple DEXs? Real project? Sufficient liquidity to exit? If no, be very cautious.</p></div></div>
+      <div class="step"><div class="step-number">&#10003;</div><div class="step-content"><h4>Check 3: Is there a social catalyst?</h4><p>Did a KOL tweet about it 30 min before? Then those wallets are retail following a tip, not smart money.</p></div></div>
+      <div class="step"><div class="step-number">&#10003;</div><div class="step-content"><h4>Check 4: Volume vs price action</h4><p>$5M in "accumulation" but zero price movement? Could indicate wash trading.</p></div></div>
+      <div class="step"><div class="step-number">&#10003;</div><div class="step-content"><h4>Check 5: What's the sell-side look like?</h4><p>If one large wallet is distributing while coordinated wallets buy, you might be watching an exit strategy.</p></div></div>
+    </div>
+    <div class="callout amber"><div class="callout-title">When in doubt</div><p>Frame as a question: "Interesting activity on $TOKEN. Is this coordinated accumulation or something else? Here's what I'm seeing." That framing protects you if the signal turns out to be manufactured.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('coordination')"><span class="arrow">&larr;</span> <span>Coordinated Wallets</span></a><a class="page-nav-btn" onclick="navigate('audience')"><span>Know Your Audience</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-audience">
+  <div class="section-header"><div class="section-eyebrow">Part 3 &mdash; Signal to Content</div><h2>Know Your Audience</h2><p>The same insight will land very differently depending on who's reading it.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Crypto-Native Traders</h4><p>Lead with the data point. Name the wallet immediately. Don't explain what a whale is. They respect evidence, not hype.</p></div>
+      <div class="card"><h4>Crypto-Curious Investors</h4><p>Lead with the outcome in plain English. Then explain how you found it. Use analogies. "Imagine seeing what a hedge fund buys before any filing."</p></div>
+      <div class="card"><h4>Your Existing Audience</h4><p>Match the tone they expect. Trading education account = tool that sharpens analysis. News account = source behind the story.</p></div>
+    </div>
+    <h4 style="margin-top:32px;">Growing from a Small Account</h4>
+    <div class="cards-grid">
+      <div class="card"><h4>Reply to Trending Discourse</h4><p>Jump in with data-backed replies to high-engagement tweets. "The on-chain data actually shows 3 whales accumulated $2M before this move."</p></div>
+      <div class="card"><h4>Tag Relevant Entities</h4><p>If Wintermute wallets are accumulating, tag Wintermute. A retweet from a large account can 10x your reach.</p></div>
+      <div class="card"><h4>Keep Threads Short</h4><p>A 7-tweet thread from a 2K account loses 80% by tweet 3. Max 3-4 tweets until engagement supports longer formats.</p></div>
+      <div class="card"><h4>Engage Genuinely</h4><p>Follow, reply to, and share content from other analysts. The crypto content community is small enough that genuine engagement gets noticed.</p></div>
+    </div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('validation')"><span class="arrow">&larr;</span> <span>Validation</span></a><a class="page-nav-btn" onclick="navigate('formats')"><span>Content Formats</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-formats">
+  <div class="section-header"><div class="section-eyebrow">Part 3 &mdash; Signal to Content</div><h2>Content Formats and When to Use Each</h2><p>Different insights suit different formats. One good insight = five pieces of content.</p></div>
+  <div class="content-block">
+    <table class="data-table">
+      <thead><tr><th>Format</th><th>Best For</th><th>Length</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Single Post</strong></td><td>A number so striking it speaks for itself</td><td>1 post + screenshot</td></tr>
+        <tr><td><strong>Thread</strong></td><td>Full story: accumulation, entity, price, distribution</td><td>4-7 posts</td></tr>
+        <tr><td><strong>Short Video</strong></td><td>Walking through a Nansen workflow live</td><td>30-90 seconds</td></tr>
+        <tr><td><strong>Long-Form</strong></td><td>Deep dive on a wallet's history or token's full story</td><td>500-1500 words</td></tr>
+        <tr><td><strong>Newsletter</strong></td><td>Weekly roundup of strongest signals</td><td>Curated, recurring</td></tr>
+      </tbody>
+    </table>
+    <h4>One Insight, Five Formats</h4>
+    <p>Suppose Wintermute-linked wallets accumulated $1M of ALCH, price pumped 50%, and one wallet started selling:</p>
+    <div class="cards-grid">
+      <div class="card"><h4>Single Post</h4><p>"Wintermute-linked wallets bought $1M of ALCH. Price pumped 50%. One wallet is already selling."</p></div>
+      <div class="card"><h4>Thread Opener</h4><p>"A cluster of wallets linked to Wintermute just drove a 50% pump in $ALCH. Here's the full story..."</p></div>
+      <div class="card"><h4>Video Hook</h4><p>"I want to show you something: this wallet linked to Wintermute bought a million dollars of this token in under an hour..."</p></div>
+      <div class="card"><h4>Newsletter</h4><p>"This week's biggest on-chain move: Wintermute-linked wallets accumulated over $1M of ALCH..."</p></div>
+    </div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('audience')"><span class="arrow">&larr;</span> <span>Audience</span></a><a class="page-nav-btn" onclick="navigate('nfa')"><span>Not Financial Advice</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-nfa">
+  <div class="section-header"><div class="section-eyebrow">Part 3 &mdash; Signal to Content</div><h2>The "Not Financial Advice" Framework</h2><p>You're a reporter, not a fortune teller. On-chain data shows behaviour, it does not predict outcomes.</p></div>
+  <div class="content-block">
+    <table class="data-table">
+      <thead><tr><th>Instead of...</th><th>Say...</th></tr></thead>
+      <tbody>
+        <tr><td>"This token is going to pump"</td><td>"Smart money is accumulating, a pattern that preceded moves before"</td></tr>
+        <tr><td>"Buy this now"</td><td>"Here's what the on-chain data is showing right now"</td></tr>
+        <tr><td>"This is dumping"</td><td>"Distribution starting from wallets that accumulated 3 weeks ago"</td></tr>
+        <tr><td>"Guaranteed to..."</td><td>"Historically, when this pattern appeared, [X] followed, but past patterns don't guarantee future outcomes"</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><div class="callout-title">When Someone DMs "Should I Buy This?"</div><p>Always some version of: "I don't give trade advice, but here's what the data shows, and you can decide from there." Point them to the Nansen feature to check themselves. Never tell someone to buy or sell, even casually, even in a DM.</p></div>
+    <p><strong>Simple disclaimer:</strong> "On-chain analysis and observations. Not financial advice. I share what the data shows, you make your own decisions." Put it in your bio. That's enough.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('formats')"><span class="arrow">&larr;</span> <span>Formats</span></a><a class="page-nav-btn" onclick="navigate('mistakes')"><span>Common Mistakes</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-mistakes">
+  <div class="section-header"><div class="section-eyebrow">Part 3 &mdash; Signal to Content</div><h2>Common Mistakes to Avoid</h2></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card" style="border-left: 3px solid var(--accent-red);"><h4>Posting Without a Visual</h4><p>A claim without evidence is just noise. Every post needs a chart or screenshot. No clean visual? Hold the post.</p></div>
+      <div class="card" style="border-left: 3px solid var(--accent-red);"><h4>Burying the Lead</h4><p>Lead with the most striking number or fact. Your audience decides in the first two seconds whether to keep reading.</p></div>
+      <div class="card" style="border-left: 3px solid var(--accent-red);"><h4>Only Covering Accumulation</h4><p>Distribution is underreported and genuinely useful. When accumulators sell, that's often a stronger post.</p></div>
+      <div class="card" style="border-left: 3px solid var(--accent-red);"><h4>Leading with Nansen</h4><p>Story first, tool second. "Whales accumulated $4.5M of PEPE" is the hook. "Track wallets on Nansen" is the follow-up.</p></div>
+      <div class="card" style="border-left: 3px solid var(--accent-red);"><h4>Covering Everything at Once</h4><p>5 signals today? Pick the strongest. Save the rest for tomorrow. You just bought 4 days of content.</p></div>
+    </div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('nfa')"><span class="arrow">&larr;</span> <span>NFA Framework</span></a><a class="page-nav-btn" onclick="navigate('brand')"><span>Building Your Brand</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<!-- PART 4 PAGES (condensed for space) -->
+<div class="page-section" id="page-brand">
+  <div class="section-header"><div class="section-eyebrow">Part 4 &mdash; The Long Game</div><h2>Building a Personal Brand Around On-Chain Data</h2><p>The affiliates who build durable audiences become known for a specific lens on the market.</p></div>
+  <div class="content-block">
+    <h3>Pick a Lane</h3>
+    <table class="data-table">
+      <thead><tr><th>Lane</th><th>What You Cover</th><th>Why It Works</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Whale Watching</strong></td><td>Large wallet movements, named entities, fund flows</td><td>Broad appeal, always newsworthy, easiest to start</td></tr>
+        <tr><td><strong>Perp Tracker</strong></td><td>Top uPNL wallets on Hyperliquid</td><td>Specific audience of active traders, high loyalty</td></tr>
+        <tr><td><strong>Unlock Analyst</strong></td><td>How wallets behave around token unlock dates</td><td>Differentiated, genuinely useful for spot buyers</td></tr>
+        <tr><td><strong>Sector Flow</strong></td><td>Which categories are seeing smart money flow in</td><td>Higher-level thinker watching the bigger picture</td></tr>
+        <tr><td><strong>Chain Specialist</strong></td><td>Deep coverage of one ecosystem (Solana, Base)</td><td>Strong community word-of-mouth</td></tr>
+        <tr><td><strong>KOL Tracker</strong></td><td>What influencers are actually buying vs saying</td><td>High engagement, people love the transparency</td></tr>
+      </tbody>
+    </table>
+    <h3>Content Mix That Compounds</h3>
+    <div class="cards-grid">
+      <div class="card"><h4>50% Reactive</h4><p>Posting about what just happened. Generates short-term reach. Valuable for discovery.</p></div>
+      <div class="card"><h4>30% Episodic</h4><p>Following a wallet or story over time. Builds habitual readers who come back for the next chapter.</p></div>
+      <div class="card"><h4>20% Evergreen</h4><p>How-to guides, workflow walkthroughs, concept explainers. Keeps attracting new followers for months.</p></div>
+    </div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('mistakes')"><span class="arrow">&larr;</span> <span>Mistakes</span></a><a class="page-nav-btn" onclick="navigate('god-mode')"><span>Token God Mode</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-god-mode">
+  <div class="section-header"><div class="section-eyebrow">Part 4 &mdash; The Long Game</div><h2>Token God Mode and Beyond</h2><p>The dashboard view of everything you'd otherwise check across 4 different tabs.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Holder Breakdown</h4><p>Who owns the supply right now, broken down by wallet type (funds, smart money, retail).</p></div>
+      <div class="card"><h4>Smart Money Concentration</h4><p>What percentage is held by wallets Nansen has labeled as smart money.</p></div>
+      <div class="card"><h4>Exchange Flows</h4><p>Net inflows and outflows over time, alongside the price chart.</p></div>
+      <div class="card"><h4>Wallet Profiler</h4><p>Full history of any wallet: every token held, buy/sell timing, PnL. Essential for watchlists.</p></div>
+    </div>
+    <p>Use the standard page for step-by-step research. Use Token God Mode for comprehensive screenshots and quick scans. Each feature you understand = a new type of content you can create.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('brand')"><span class="arrow">&larr;</span> <span>Brand</span></a><a class="page-nav-btn" onclick="navigate('measuring')"><span>Measuring Performance</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-measuring">
+  <div class="section-header"><div class="section-eyebrow">Part 4 &mdash; The Long Game</div><h2>Measuring What Works</h2><p>You don't need complex analytics. You need a simple system for knowing what resonates.</p></div>
+  <div class="content-block">
+    <h4>Metrics That Matter (in order)</h4>
+    <table class="data-table">
+      <thead><tr><th>Metric</th><th>What It Tells You</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Link Clicks</strong></td><td>Directly correlates with affiliate goals. The most important metric.</td></tr>
+        <tr><td><strong>Saves / Bookmarks</strong></td><td>Silent signal of genuine value. High saves vs likes = useful, not just entertaining.</td></tr>
+        <tr><td><strong>Replies</strong></td><td>Engagement that leads to discussion. More invested than a like.</td></tr>
+        <tr><td><strong>Follower Growth</strong></td><td>Did this post bring new people in? Shows your discovery vs retention content.</td></tr>
+        <tr><td><strong>Impressions</strong></td><td>Useful for reach but misleading alone. 100K impressions + 2 clicks = poor performance.</td></tr>
+      </tbody>
+    </table>
+    <p class="inner-voice">Ask yourself each week: "If I could only post one type of content next week, which type would I choose based on performance?" That answer is your content strategy, simplified.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('god-mode')"><span class="arrow">&larr;</span> <span>God Mode</span></a><a class="page-nav-btn" onclick="navigate('daily-workflow')"><span>Daily Workflow</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-daily-workflow">
+  <div class="section-header"><div class="section-eyebrow">Part 4 &mdash; The Long Game</div><h2>Building Consistency: Your Daily Workflow</h2><p>45 minutes a day. The affiliates who show up consistently always beat the ones with occasional viral posts.</p></div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number" style="background:rgba(16,185,129,0.15);color:var(--accent-green);">15m</div><div class="step-content"><h4>Morning Check</h4><p>Token Screener with Whale + Public Figure filters, 24h view. Check smart alerts. Note 1-2 candidates.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">25m</div><div class="step-content"><h4>Deep Dive</h4><p>Best candidate: Holders tab, Balance Over Time, check for coordination, capture screenshots.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(139,92,246,0.15);color:var(--accent-purple);">10m</div><div class="step-content"><h4>Post</h4><p>Three questions framework. 1-2 visuals. Nansen CTA. Done.</p></div></div>
+    </div>
+    <p>Not every day will produce something dramatic. On quiet days, post education or a workflow tip instead.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('measuring')"><span class="arrow">&larr;</span> <span>Measuring</span></a><a class="page-nav-btn" onclick="navigate('quiet-markets')"><span>Quiet Markets</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-quiet-markets">
+  <div class="section-header"><div class="section-eyebrow">Part 4 &mdash; The Long Game</div><h2>What to Post When the Market Is Quiet</h2><p>Most affiliates go silent. That's exactly when consistent posting separates you.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Retroactive Analysis</h4><p>"Here's what the on-chain data looked like 48 hours before [token] moved 80%." Works any time.</p></div>
+      <div class="card"><h4>Wallet Spotlights</h4><p>Pick a labeled wallet with a strong track record. Walk through their history and profit.</p></div>
+      <div class="card"><h4>"What I'm Watching"</h4><p>Quiet accumulation with no price reaction yet. Ages well if the move eventually comes.</p></div>
+      <div class="card"><h4>Explainer Content</h4><p>Teach concepts your audience needs. An educated audience engages more with your signal posts.</p></div>
+      <div class="card"><h4>Weekly Recap</h4><p>"On-chain recap: what smart money did this week." Trains your audience to expect you on schedule.</p></div>
+      <div class="card"><h4>Build Your Watchlist</h4><p>Use quiet periods to find wallets that were early on past moves. Build the edge you'll use later.</p></div>
+    </div>
+    <div class="tldr"><div class="tldr-label">TLDR</div><p>Quiet market = content opportunity, not downtime. The affiliates who win in active markets prepared during the quiet ones.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('daily-workflow')"><span class="arrow">&larr;</span> <span>Daily Workflow</span></a><a class="page-nav-btn" onclick="navigate('cs-mm')"><span>Case Study 1</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<!-- CASE STUDIES -->
+<div class="page-section" id="page-cs-mm">
+  <div class="section-header"><div class="section-eyebrow">Part 5 &mdash; Case Studies</div><h2>Case Study 1: Market Maker Accumulation</h2><p>A market maker starts taking directional bets. No news, no buzz, no catalyst. One signal becomes 4 posts across 8 days.</p></div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number" style="background:rgba(16,185,129,0.15);color:var(--accent-green);">D1</div><div class="step-content"><h4>Signal Spotted</h4><p>Market maker appears in Holders tab with a fresh position. No price reaction. <em>"Worth watching."</em></p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">D3</div><div class="step-content"><h4>Accumulation Continues</h4><p>Position doubled. Price up 8%. <em>"They've doubled their position in 3 days."</em></p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(245,158,11,0.15);color:var(--accent-amber);">D5</div><div class="step-content"><h4>Price Moves</h4><p>Up 35%. Social media noticing. <em>"Remember when I flagged this 5 days ago?"</em></p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(239,68,68,0.15);color:var(--accent-red);">D8</div><div class="step-content"><h4>Distribution Starts</h4><p>Market maker selling at ~30% profit. <em>"If you entered when I flagged this, you had 5 days of lead time."</em></p></div></div>
+    </div>
+    <div class="callout green"><div class="callout-title">What This Teaches</div><p>Episodic content in action. You didn't predict the outcome. You reported what the data showed, one step at a time. 1 signal = 4 posts across 8 days.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('quiet-markets')"><span class="arrow">&larr;</span> <span>Quiet Markets</span></a><a class="page-nav-btn" onclick="navigate('cs-unlock')"><span>Case Study 2</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-cs-unlock">
+  <div class="section-header"><div class="section-eyebrow">Part 5 &mdash; Case Studies</div><h2>Case Study 2: The Token Unlock</h2><p>$50M in VC tokens unlocking. The market fears a dump. The data tells a different story.</p></div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">-3d</div><div class="step-content"><h4>Pre-Unlock</h4><p>VCs haven't sold any previously unlocked tokens. <em>"Selling might not be as aggressive as the market fears."</em></p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(245,158,11,0.15);color:var(--accent-amber);">D0</div><div class="step-content"><h4>Unlock Day</h4><p>1 of 3 VCs moves to Binance. Other 2 haven't moved. <em>"Only 1 of 3 VCs is selling."</em></p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(16,185,129,0.15);color:var(--accent-green);">+2d</div><div class="step-content"><h4>48 Hours Later</h4><p>Wallet A sold everything. B and C moved to cold storage. <em>"2 of 3 VCs chose to stay."</em></p></div></div>
+    </div>
+    <div class="callout green"><div class="callout-title">What This Teaches</div><p>Natural 3-act structure. The "VCs didn't all sell" angle counters the narrative the market was running with. Contrarian insight backed by on-chain data is powerful content.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('cs-mm')"><span class="arrow">&larr;</span> <span>Case Study 1</span></a><a class="page-nav-btn" onclick="navigate('cs-concentration')"><span>Case Study 3</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-cs-concentration">
+  <div class="section-header"><div class="section-eyebrow">Part 5 &mdash; Case Studies</div><h2>Case Study 3: Supply Concentration Red Flag</h2><p>Token is up 60%. Everyone's talking about it. But the holder data tells a different story.</p></div>
+  <div class="content-block">
+    <div class="callout" style="border-left-color: var(--accent-red); background: rgba(239,68,68,0.05);">
+      <div class="callout-title" style="color: var(--accent-red);">The Finding</div>
+      <p>4 unlabeled wallets hold 38% of circulating supply. All acquired in the same 48-hour window, 3 weeks ago. Cost basis: $0.01. Current price: $0.06. They're each up 6x. None have sold yet.</p>
+    </div>
+    <div class="example-post"><div class="example-label">Your Post</div><p>"$TOKEN is up 60% and everyone's talking about it. But 4 wallets hold 38% of the supply. They bought at $0.01, up 6x. None have sold yet. When they do, there may not be enough buyers."</p></div>
+    <p><strong>3 days later:</strong> One wallet sells 20% of their position. Price drops 15%. You follow up. Your audience saw it coming because you showed them the risk.</p>
+    <div class="callout green"><div class="callout-title">What This Teaches</div><p>Not every post needs to be bullish. Risk-focused content builds trust with an audience tired of one-sided hype. When you flag a risk and it materializes, your credibility compounds.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('cs-unlock')"><span class="arrow">&larr;</span> <span>Case Study 2</span></a><a class="page-nav-btn" onclick="navigate('event-pairing')"><span>Part 6: Advanced</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<!-- PART 6 PAGES -->
+<div class="page-section" id="page-event-pairing">
+  <div class="section-header"><div class="section-eyebrow">Part 6 &mdash; Advanced Playbook</div><h2>Pairing On-Chain Data with Off-Chain Events</h2><p>On-chain data tells you what wallets are doing. Off-chain events often tell you why. Connect both for your strongest content.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Governance Votes</h4><p>Smart money repositions before votes conclude. Check Holders tab days before a governance deadline.</p></div>
+      <div class="card"><h4>Exchange Listings</h4><p>Smart money that accumulated weeks before a listing was positioning for this moment.</p></div>
+      <div class="card"><h4>Regulatory Actions</h4><p>On-chain behavior shifts before news breaks. Mass withdrawals, competitor accumulation.</p></div>
+      <div class="card"><h4>Macro Events</h4><p>Fed decisions, CPI data. A wallet moving $10M to stablecoins before a Fed meeting is making a bet.</p></div>
+      <div class="card"><h4>Token Unlock Dates</h4><p>You already have this workflow. Layer macro context on top for richer content.</p></div>
+    </div>
+    <p class="inner-voice">When you spot on-chain activity, ask: is there an upcoming event that could explain this? When an event is approaching, check: is on-chain behavior changing in anticipation?</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('cs-concentration')"><span class="arrow">&larr;</span> <span>Case Study 3</span></a><a class="page-nav-btn" onclick="navigate('differentiation')"><span>Differentiation</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-differentiation">
+  <div class="section-header"><div class="section-eyebrow">Part 6 &mdash; Advanced Playbook</div><h2>Standing Out When Everyone Has the Same Tools</h2><p>Multiple people will post the same whale move. The question is how to make your version the one people follow.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Go Deeper</h4><p>Others post "whale bought $2M." You post their track record, win rate, average hold time, and what happened each time.</p></div>
+      <div class="card"><h4>Connect the Dots</h4><p>Others post what happened. You post why it matters in the context of a governance vote or sector rotation.</p></div>
+      <div class="card"><h4>Own a Niche</h4><p>10 people doing whale watching? Become the Solana smart money specialist or the unlock analyst.</p></div>
+      <div class="card"><h4>Recognizable Format</h4><p>Consistent visual style, recurring series names, signature framing. When they spot your post without reading the handle.</p></div>
+      <div class="card"><h4>Show Both Sides</h4><p>When everyone posts accumulation, post the supply concentration risk. Balanced analysis builds trust faster.</p></div>
+    </div>
+    <p class="inner-voice">If you removed your name from your last 5 posts, would someone who follows you recognize them as yours? If not, you haven't differentiated yet.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('event-pairing')"><span class="arrow">&larr;</span> <span>Event Pairing</span></a><a class="page-nav-btn" onclick="navigate('win-rates')"><span>Win Rates</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-win-rates">
+  <div class="section-header"><div class="section-eyebrow">Part 6 &mdash; Advanced Playbook</div><h2>Scoring Your Watchlist: Smart Money Win Rates</h2><p>Not all smart money is equally smart. Know which wallets are actually worth following.</p></div>
+  <div class="content-block">
+    <h4>Three Numbers Per Wallet</h4>
+    <div class="cards-grid">
+      <div class="card"><h4>Win Rate</h4><p>Out of last 10-20 positions, how many profitable? 70%+ = genuinely strong. Below 50% = noise.</p></div>
+      <div class="card"><h4>Average Hold Time</h4><p>Flip in 48 hours or hold for weeks? Short = post fast. Long = build episodic content.</p></div>
+      <div class="card"><h4>Average Return</h4><p>60% win rate with 5x avg wins > 80% win rate with 15% avg wins. The first takes calculated bets.</p></div>
+    </div>
+    <table class="data-table" style="margin-top:24px;">
+      <thead><tr><th>Wallet</th><th>Label</th><th>Win Rate</th><th>Avg Hold</th><th>Avg Return</th></tr></thead>
+      <tbody>
+        <tr><td>0xABC...</td><td>Wintermute-linked</td><td>7/10</td><td>8 days</td><td>~40%</td></tr>
+        <tr><td>0xDEF...</td><td>Unlabeled whale</td><td>6/10</td><td>3 days</td><td>~120%</td></tr>
+        <tr><td>0xGHI...</td><td>Known fund</td><td>5/10</td><td>21 days</td><td>~25%</td></tr>
+      </tbody>
+    </table>
+    <p>Review monthly. Remove wallets below 50%. When you post, include the track record: <em>"This wallet has been early on 7 of their last 10 positions"</em> is fundamentally different from <em>"whale bought $TOKEN."</em></p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('differentiation')"><span class="arrow">&larr;</span> <span>Differentiation</span></a><a class="page-nav-btn" onclick="navigate('multi-platform')"><span>Multi-Platform</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-multi-platform">
+  <div class="section-header"><div class="section-eyebrow">Part 6 &mdash; Advanced Playbook</div><h2>Beyond Twitter: Multi-Platform Content</h2><p>Short-form video has dramatically lower competition for crypto analysis. A 45-second screen recording can reach 50K on TikTok.</p></div>
+  <div class="content-block">
+    <div class="cards-grid">
+      <div class="card"><h4>Screen Recording Walkthrough</h4><p>Record your Nansen workflow. Narrate your thought process, not just clicks. Under 60 seconds for short-form.</p></div>
+      <div class="card"><h4>"What I Found" Format</h4><p>Face camera or voice over a screenshot. "I've been tracking a wallet for 2 weeks. Here's what happened." Personal story.</p></div>
+      <div class="card"><h4>Explainer Format</h4><p>"Most people don't know you can see exactly what any crypto wallet is doing in real time. Here's how." Drives most new followers.</p></div>
+    </div>
+    <h4>Platform Notes</h4>
+    <p><strong>TikTok/Reels/Shorts:</strong> Hook in first 3 seconds. Under 60 seconds. Captions on screen. One insight per video.</p>
+    <p><strong>YouTube Long-Form:</strong> 8-15 minute weekly deep dives. Higher effort, but videos compound for months.</p>
+    <h4>The Cross-Platform Funnel</h4>
+    <p>Video platforms = discovery. Twitter = retention. Someone finds you on TikTok, follows on Twitter, clicks your Nansen link from weeks of trust. Repurpose your 2-3 best tweets per week as video.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('win-rates')"><span class="arrow">&larr;</span> <span>Win Rates</span></a><a class="page-nav-btn" onclick="navigate('scaling')"><span>Scaling</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-scaling">
+  <div class="section-header"><div class="section-eyebrow">Part 6 &mdash; Advanced Playbook</div><h2>Scaling Your Output Without Burning Out</h2><p>From 1 post/day to 3-5, without tripling your research time. Build systems that multiply each piece of research.</p></div>
+  <div class="content-block">
+    <h3>Layer Your Smart Alerts</h3>
+    <div class="cards-grid">
+      <div class="card"><h4>Layer 1: Watchlist</h4><p>Your proven performers. Tight thresholds. Post quickly with confidence when they fire.</p></div>
+      <div class="card"><h4>Layer 2: Token-Level</h4><p>Developing stories (unlocks, sector rotation). Catches activity from wallets not on your list.</p></div>
+      <div class="card"><h4>Layer 3: Sector</h4><p>Wide alerts on entire categories. "$1M+ smart money inflows in any AI token in 24h." Fires less, but surfaces macro patterns.</p></div>
+    </div>
+    <h3>Batching for Efficiency</h3>
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number" style="background:rgba(16,185,129,0.15);color:var(--accent-green);">AM</div><div class="step-content"><h4>Research Batch (30-45 min)</h4><p>Scan, check alerts, identify 2-3 signals. Take all screenshots at once.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">Mid</div><div class="step-content"><h4>Writing Batch (20-30 min)</h4><p>Write all 2-3 posts. Tweet, thread opener, video hook. Flows faster with research done.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(139,92,246,0.15);color:var(--accent-purple);">5m</div><div class="step-content"><h4>Schedule</h4><p>Space posts throughout the day. Morning, midday, evening reach different segments.</p></div></div>
+    </div>
+    <p>60-75 minutes of focused work = 2-3 quality posts per day. Automate everything except the thinking.</p>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('multi-platform')"><span class="arrow">&larr;</span> <span>Multi-Platform</span></a><a class="page-nav-btn" onclick="navigate('monetization')"><span>Monetization</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<div class="page-section" id="page-monetization">
+  <div class="section-header"><div class="section-eyebrow">Part 6 &mdash; Advanced Playbook</div><h2>Building Beyond the Feed: Communities & Monetization</h2><p>Understanding the trade-offs early helps you build content that doesn't close doors later.</p></div>
+  <div class="content-block">
+    <h3>Three Models</h3>
+    <div class="cards-grid">
+      <div class="card"><h4>Pure Public</h4><p>Everything free. Revenue from Nansen affiliate commissions only. Maximum reach, lowest friction.</p></div>
+      <div class="card"><h4>Hybrid</h4><p>Daily signals free on Twitter. Deepest research in paid Discord/Substack. Best for most affiliates at 20K+ followers.</p></div>
+      <div class="card"><h4>Full Private</h4><p>Teasers public, real analysis behind paywall. High per-member revenue but slow growth. 50K+ territory.</p></div>
+    </div>
+    <table class="data-table" style="margin-top:24px;">
+      <thead><tr><th>Stage</th><th>Best Model</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><strong>0-5K followers</strong></td><td>Pure public</td><td>You need reach. Paywalling early kills growth.</td></tr>
+        <tr><td><strong>5K-20K</strong></td><td>Start testing</td><td>Free Discord alongside Twitter. Gauge demand.</td></tr>
+        <tr><td><strong>20K+</strong></td><td>Hybrid viable</td><td>Proven free content. Paid tier for depth. $15-30/month.</td></tr>
+        <tr><td><strong>50K+</strong></td><td>Full range</td><td>Paid Discord + free Twitter + affiliate + sponsored.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout green"><div class="callout-title">Key Rule</div><p>Differentiate on <strong>depth</strong>, not exclusivity. Public = finished analysis. Private = process, reasoning, advance signals. Both feel valuable. Neither feels like leftovers.</p></div>
+  </div>
+  <div class="page-nav"><a class="page-nav-btn" onclick="navigate('scaling')"><span class="arrow">&larr;</span> <span>Scaling</span></a><a class="page-nav-btn" onclick="navigate('first-week')"><span>First Week Checklist</span> <span class="arrow">&rarr;</span></a></div>
+</div>
+
+<!-- FIRST WEEK CHECKLIST -->
+<div class="page-section" id="page-first-week">
+  <div class="section-header"><div class="section-eyebrow">Getting Started</div><h2>Your First Week: A Simple Checklist</h2><p>Wondering "what do I actually do tomorrow?" Here's your first week, step by step.</p></div>
+  <div class="content-block">
+    <div class="workflow-steps">
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">D1</div><div class="step-content"><h4>Set Up and Explore</h4><p>Log into Nansen, spend 15 min clicking around. Pick your lane (whale watching if unsure). Don't post yet.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">D2</div><div class="step-content"><h4>Your First Workflow Post</h4><p>Follow Workflow 1 or 2. Find something interesting, screenshot it, write using the three questions. Post it.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">D3</div><div class="step-content"><h4>Set Up Smart Alerts</h4><p>2 wallet alerts (wallets from Day 2) + 1 token alert. Thresholds higher than you think.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">D4</div><div class="step-content"><h4>Try a Different Workflow</h4><p>If you did Perps on Day 2, try Trending + Holders today. Or try Exchange Flows. Post what you find.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">D5</div><div class="step-content"><h4>Start Your Watchlist</h4><p>Find 2-3 wallets that were early on a recent move. Add them to your Nansen watchlist. Set alerts.</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(59,130,246,0.15);color:var(--accent);">D6</div><div class="step-content"><h4>Educational Post</h4><p>Pick one glossary concept. Explain it in your own words with a Nansen screenshot. "Here's what exchange outflows mean."</p></div></div>
+      <div class="step"><div class="step-number" style="background:rgba(16,185,129,0.15);color:var(--accent-green);">D7</div><div class="step-content"><h4>Review and Plan</h4><p>Which posts got engagement? Which felt easiest? Set up your 45-min daily rhythm for next week.</p></div></div>
+    </div>
+    <div class="callout green"><div class="callout-title">By End of Week 1</div><p>3-4 posts published. Alerts configured. Watchlist started. Daily rhythm established. Everything from here is iteration.</p></div>
+    <div style="text-align:center; margin-top:48px; padding: 40px; border-radius: 16px; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.15);">
+      <p style="font-size: 18px; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">Your audience is out there.</p>
+      <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px;">They don't have access to what you have access to. Go show them what the data says.</p>
+      <a class="hero-cta" onclick="navigate('home')">Back to Overview &rarr;</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// Navigation state
+const pages = [
+  'home','core-idea','your-role','hierarchy','glossary',
+  'decision-tree','wf-perps','wf-trending','wf-exchange','wf-unlock','wf-sector','wf-alerts','signal-timing','when-to-post',
+  'three-questions','coordination','validation','audience','formats','nfa','mistakes',
+  'brand','god-mode','measuring','daily-workflow','quiet-markets',
+  'cs-mm','cs-unlock','cs-concentration',
+  'event-pairing','differentiation','win-rates','multi-platform','scaling','monetization',
+  'first-week'
+];
+const visited = new Set(['home']);
+let currentPage = 'home';
+
+function navigate(pageId) {
+  // Hide all pages
+  document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+  // Show target
+  const target = document.getElementById('page-' + pageId);
+  if (target) {
+    target.classList.add('active');
+    // Force re-trigger animation
+    target.style.animation = 'none';
+    target.offsetHeight;
+    target.style.animation = '';
+  }
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navItem = document.querySelector(`[data-page="${pageId}"]`);
+  if (navItem) {
+    navItem.classList.add('active');
+    navItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  // Track visited
+  visited.add(pageId);
+  currentPage = pageId;
+  updateProgress();
+  // Scroll main to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Close sidebar on mobile
+  if (window.innerWidth <= 1024) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+function updateProgress() {
+  const pct = Math.round((visited.size / pages.length) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '% Complete';
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// Keyboard nav
+document.addEventListener('keydown', (e) => {
+  const idx = pages.indexOf(currentPage);
+  if (e.key === 'ArrowRight' && idx < pages.length - 1) navigate(pages[idx + 1]);
+  if (e.key === 'ArrowLeft' && idx > 0) navigate(pages[idx - 1]);
+});
+
+updateProgress();
+</script>
+</body>
+</html>
